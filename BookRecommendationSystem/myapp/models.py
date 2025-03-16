@@ -23,6 +23,7 @@ class Book(models.Model):
 
 #DON'T FORGET TO CHANGE FIELDS
 #ALSO MAKE MIGRATIONS 
+
 #python3 manage.py makemigrations myapp
 #python3 manage.py migrate
 

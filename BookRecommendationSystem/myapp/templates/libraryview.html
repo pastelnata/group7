@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Instrument+Serif&amp;display=swap" rel="stylesheet">
+    <link href="./css/main.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-size: 17px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .descriptionofthepage {
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .blockofblocks {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .block {
+            background-color: #fdf8e4;
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            position: relative;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .block img {
+            width: 80px;
+            height: 100px;
+            background-color: lightgray;
+            border-radius: 5px;
+        }
+
+        .titleofthebook {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .titleofthebook p {
+            margin-bottom: 10px;
+        }
+
+        .option {
+            color: red;
+            font-weight: bold;
+            font-size: 17px;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .star {
+            color: gold;
+            font-size: 20px;
+        }
+
+
+        .read-more {
+            text-align: right;
+            font-size: 12px;
+            color: #444;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="descriptionofthepage">
+        <h1>Here are our picks for you:</h1>
+    </div>
+
+
+
+    <div class="blockofblocks">
+        {% for event in event_list %}
+        <div class="block">
+            <img src="{{ event.imgURL }}" alt="Book Cover">
+            <div>
+                <div class="titleofthebook">
+                    <p>{{ event.title }}</p>
+                </div>
+                <p>{{ event.author }}</p>
+                <p>Price: {{ event.price }}</p>
+                <p>Category: {{ event.category_name }}</p>
+                <div class="rating">
+                    <span class="star">⭐ {{ event.stars }}</span>
+                </div>
+                <p class="read-more">
+                    <a href="{{ event.productURL }}" target="_blank">Read more >> </a>
+
+                </p>
+                <p>🗑?</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    </div>
+
+    </div>
+</body>
+
+</html>
