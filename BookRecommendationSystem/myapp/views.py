@@ -1,4 +1,7 @@
 import json
+
+from django.db.models.functions import Random
+
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from .models import Book
@@ -6,7 +9,9 @@ from .models import Book
 
 def libraryview(request):
     event_list=Book.objects.all()
-    return render(request,"libraryview.html", {'event_list': event_list })
+    # random books since loading whole database makes the system loads for at leat 5 min or it is breaking 
+    random_books = event_list.order_by(Random())[:10]  
+    return render(request, "libraryview.html", {'event_list': random_books})  
 
 def autocomplete(request):
     if 'term' in request.GET:

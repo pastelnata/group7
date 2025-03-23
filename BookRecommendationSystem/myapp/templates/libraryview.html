@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css?family=Instrument+Serif&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Instrument+Serif&display=swap" rel="stylesheet">
     <link href="./css/main.css" rel="stylesheet">
     <style>
         * {
@@ -20,14 +20,15 @@
             flex-direction: column;
             align-items: center;
             padding: 30px;
-            background-color: #f5f5f5;
+            background-color: #f9f9f9;
         }
 
         .descriptionofthepage {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             margin-bottom: 25px;
-            color: #333;
+            color: #444;
+            text-align: center;
         }
 
         .blockofblocks {
@@ -36,11 +37,11 @@
             align-items: center;
             gap: 25px;
             width: 100%;
-            max-width: 600px;
+            max-width: 700px;
         }
 
         .block {
-            background-color: #f0e5bf;
+            background-color: #fff;
             width: 100%;
             padding: 20px;
             border-radius: 12px;
@@ -48,17 +49,18 @@
             align-items: flex-start;
             gap: 15px;
             position: relative;
-            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
 
         .block:hover {
-            transform: scale(1.02);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
 
         .block img {
-            width: 90px;
-            height: 120px;
+            width: 100px;
+            height: 140px;
             background-color: lightgray;
             border-radius: 8px;
             object-fit: cover;
@@ -70,15 +72,15 @@
             flex-direction: column;
         }
 
-        .titleofthebook {
+        .titleofthebook p {
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
             color: #222;
             margin-bottom: 5px;
         }
 
         .book-details p {
-            font-size: 15px;
+            font-size: 16px;
             color: #555;
             margin-bottom: 5px;
         }
@@ -96,7 +98,7 @@
         }
 
         .read-more {
-            font-size: 13px;
+            font-size: 14px;
             color: #007bff;
             margin-top: 10px;
             cursor: pointer;
@@ -122,6 +124,31 @@
 
         .delete-button:hover {
             color: #d62828;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .pagination a:hover {
+            background-color: #0056b3;
+        }
+
+        .pagination .active {
+            background-color: #0056b3;
+            font-weight: bold;
         }
     </style>
     <title>Book Recommendations</title>
@@ -151,6 +178,20 @@
             <button class="delete-button">🗑</button>
         </div>
         {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="active">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
     </div>
 </body>
 
