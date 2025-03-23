@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Instrument Serif', serif;
         }
 
         body {
@@ -18,121 +19,138 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 30px;
+            background-color: #f5f5f5;
         }
 
         .descriptionofthepage {
-            font-size: 21px;
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: #333;
         }
 
         .blockofblocks {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
+            width: 100%;
+            max-width: 600px;
         }
 
         .block {
-            background-color: #fdf8e4;
-            width: 400px;
+            background-color: #f0e5bf;
+            width: 100%;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: flex-start;
             gap: 15px;
             position: relative;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .block:hover {
+            transform: scale(1.02);
         }
 
         .block img {
-            width: 80px;
-            height: 100px;
+            width: 90px;
+            height: 120px;
             background-color: lightgray;
-            border-radius: 5px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .book-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .titleofthebook {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
+            color: #222;
+            margin-bottom: 5px;
         }
 
-        .titleofthebook p {
-            margin-bottom: 10px;
+        .book-details p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 5px;
         }
-
-        .option {
-            color: red;
-            font-weight: bold;
-            font-size: 17px;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            gap: 10px;
-            cursor: pointer;
-        }
-
 
         .rating {
             display: flex;
+            align-items: center;
             gap: 5px;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .star {
             color: gold;
-            font-size: 20px;
+            font-size: 18px;
         }
-
 
         .read-more {
-            text-align: right;
-            font-size: 12px;
-            color: #444;
+            font-size: 13px;
+            color: #007bff;
             margin-top: 10px;
             cursor: pointer;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .read-more:hover {
+            color: #0056b3;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #e63946;
+            transition: color 0.2s;
+        }
+
+        .delete-button:hover {
+            color: #d62828;
         }
     </style>
-    <title>Document</title>
+    <title>Book Recommendations</title>
 </head>
 
 <body>
     <div class="descriptionofthepage">
-        <h1>Here are our picks for you:</h1>
+        <h2>Here are our picks for you:</h2>
     </div>
-
-
 
     <div class="blockofblocks">
         {% for event in event_list %}
         <div class="block">
             <img src="{{ event.imgURL }}" alt="Book Cover">
-            <div>
+            <div class="book-details">
                 <div class="titleofthebook">
                     <p>{{ event.title }}</p>
                 </div>
-                <p>{{ event.author }}</p>
-                <p>Price: {{ event.price }}</p>
-                <p>Category: {{ event.category_name }}</p>
+                <p><strong>Author:</strong> {{ event.author }}</p>
+                <p><strong>Price:</strong> {{ event.price }}</p>
+                <p><strong>Category:</strong> {{ event.category_name }}</p>
                 <div class="rating">
                     <span class="star">⭐ {{ event.stars }}</span>
                 </div>
-                <p class="read-more">
-                    <a href="{{ event.productURL }}" target="_blank">Read more >> </a>
-
-                </p>
-                <p>🗑?</p>
+                <a href="{{ event.productURL }}" target="_blank" class="read-more">Read more >></a>
             </div>
+            <button class="delete-button">🗑</button>
         </div>
-
-    </div>
-
-
-
-
-    </div>
-
+        {% endfor %}
     </div>
 </body>
 
