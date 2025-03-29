@@ -9,7 +9,7 @@ from .models import Book
 
 def libraryview(request):
     event_list=Book.objects.all()
-    # random books since loading whole database makes the system loads for at leat 5 min or it is breaking 
+    # random books since loading whole database makes the system loads for at least 5 min or it is breaking 
     random_books = event_list.order_by(Random())[:10]  
     return render(request, "libraryview.html", {'event_list': random_books})  
 

@@ -47,14 +47,14 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-    <!-- <script>
+    <script>
         $(function () {
             $("#product").autocomplete({
-                source: '{% url '/' %}',
-                minLength: 2
+                source: "{% url 'autocomplete' %}",
+                minLength: 5
             });
         });
-    </script>  -->
+    </script>
 
 
 </body>
