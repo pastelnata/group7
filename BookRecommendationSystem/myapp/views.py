@@ -22,3 +22,17 @@ task2 implement autosuggestions not only for title but also for author
         return JsonResponse(titles, safe=False)
         """
     return render(request,"home.html")
+
+def top10_page(request):
+    # dummy data
+    top10s = {
+        "Top 10 fiction": [f"Book {i}" for i in range(1, 11)],
+        "Top 10 non-fiction": [f"Book {i}" for i in range(1, 11)],
+        "Top 10 science": [f"Book {i}" for i in range(1, 11)],
+        "Top 10 history": [f"Book {i}" for i in range(1, 11)],
+        "Top 10 fantasy": [f"Book {i}" for i in range(1, 11)],
+        "Top 10 biography": [f"Book {i}" for i in range(1, 11)],
+        "Top 10 mystery": [f"Book {i}" for i in range(1, 11)],
+        "Top 10 romance": [f"Book {i}" for i in range(1, 11)],
+    }
+    return render(request,"top10.html", {"top10s": top10s})
