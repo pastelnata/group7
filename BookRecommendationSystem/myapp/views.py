@@ -21,4 +21,5 @@ task2 implement autosuggestions not only for title but also for author
         # titles = [product.title for product in qs]
         return JsonResponse(titles, safe=False)
         """
-    return render(request,"home.html")
+    return render(request,"homepage.html")
+

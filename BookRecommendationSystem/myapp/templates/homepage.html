@@ -1,0 +1,101 @@
+{% extends "home.html" %}
+{% block title %} Home Page {% endblock %}
+{% block content %}
+
+
+<div class="inner-box">
+        <h1>Pick your favorite tags📙</h1>
+        <div class="button-grid">
+                <button class="option-btn">Option 1</button>
+                <button class="option-btn">Option 2</button>
+                <button class="option-btn">Option 3</button>
+                <button class="option-btn">Option 4</button>
+                <button class="option-btn">Option 5</button>
+                <button class="option-btn">Option 6</button>
+                <button class="option-btn">Option 7</button>
+                <button class="option-btn">Option 8</button>
+                <button class="option-btn">Option 9</button>
+                <button class="option-btn">Option 1</button>
+                <button class="option-btn">Option 2</button>
+                <button class="option-btn">Option 1</button>
+                <button class="option-btn">Option 2</button>
+                <button class="option-btn">Option 3</button>
+                <button class="option-btn">Option 4</button>
+                <button class="option-btn">Option 5</button> 
+            </div>
+            <button class="submit-btn">SUBMIT</button>
+        </div>
+</div>
+<div class="inner-box">
+    <h1>Pick your favorite genres📙</h1>
+    <div class="button-grid">
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 3</button>
+            <button class="option-btn">Option 4</button>
+            <button class="option-btn">Option 5</button>
+            <button class="option-btn">Option 6</button>
+            <button class="option-btn">Option 7</button>
+            <button class="option-btn">Option 8</button>
+            <button class="option-btn">Option 9</button>
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 3</button>
+            <button class="option-btn">Option 4</button>
+            <button class="option-btn">Option 5</button> 
+        </div>
+        <button class="submit-btn">SUBMIT</button>
+    </div>
+</div>
+<div class="inner-box">
+    <h1>Pick your favorite books 📙</h1>
+    <div class="button-grid">
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 3</button>
+            <button class="option-btn">Option 4</button>
+            <button class="option-btn">Option 5</button>
+            <button class="option-btn">Option 6</button>
+            <button class="option-btn">Option 7</button>
+            <button class="option-btn">Option 8</button>
+            <button class="option-btn">Option 9</button>
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 1</button>
+            <button class="option-btn">Option 2</button>
+            <button class="option-btn">Option 3</button>
+            <button class="option-btn">Option 4</button>
+            <button class="option-btn">Option 5</button> 
+        </div>
+        <button class="submit-btn">SUBMIT</button>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".option-btn");
+    const maxSelection = 5; // Limit to 5 selections
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function() {
+            let selectedButtons = document.querySelectorAll(".option-btn.selected");
+
+            if (this.classList.contains("selected")) {
+                this.classList.remove("selected"); // Deselect if already selected
+            } else if (selectedButtons.length < maxSelection) {
+                this.classList.add("selected"); // Select if under the limit
+            } else {
+                alert("You can only select up to 5 options.");
+            }
+        });
+    });
+});
+</script>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+
+
