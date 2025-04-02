@@ -1,5 +1,5 @@
 import pandas as pd
-from myapp.models import Book
+from books.models import Book
 import os
 from datetime import datetime
 
