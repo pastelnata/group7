@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp', 
-    'bst_search'
+    'search'
 ]
 
 MIDDLEWARE = [
