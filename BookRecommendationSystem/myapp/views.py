@@ -4,7 +4,7 @@ from django.db.models.functions import Random
 
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
-from .models import Book
+from books.models import Book
 # Create your views here.
 
 def libraryview(request):
@@ -14,11 +14,14 @@ def libraryview(request):
     return render(request, "libraryview.html", {'event_list': random_books})  
 
 def autocomplete(request):
+    print(Book.objects.count())
+
     if 'term' in request.GET:
         qs = Book.objects.filter(title__icontains=request.GET.get('term'))
         titles = list()
         for product in qs:
             titles.append(product.title)
+        print(titles)
 
         # titles = [product.title for product in qs]
         return JsonResponse(titles, safe=False)

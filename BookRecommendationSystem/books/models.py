@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-
 class Book(models.Model):
     asin = models.CharField(max_length=20, unique=True, null=True, blank=True)
     title = models.CharField(max_length=255)

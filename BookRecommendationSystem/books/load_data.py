@@ -8,11 +8,15 @@ try:
 except NameError:
     current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__name__)))
 
-csv_path = os.path.join(current_dir, 'BookRecommendationSystem', 'myapp', 'dataset', 'kindle_data-v2.csv')
+csv_path = os.path.join(current_dir, 'BookRecommendationSystem', 'books', 'dataset', 'kindle_data-v2.csv')
 
 print(f"Attempting to read file from: {csv_path}")
 
-df = pd.read_csv(csv_path)
+try:
+    df = pd.read_csv(csv_path)
+except Exception as e:
+    print(f"Error reading CSV file: {e}")
+    exit()
 
 df.columns = df.columns.str.strip()
 
