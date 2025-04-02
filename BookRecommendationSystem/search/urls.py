@@ -19,5 +19,5 @@ def search_view(request):
     })
 
 urlpatterns = [
-    path('search/', search_view, name='bst-search'),
+    path('', search_view, name='bst-search'),
 ] 

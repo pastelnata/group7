@@ -1,5 +1,5 @@
 from django.core.cache import cache
-from myapp.models import Book  # Using the existing Book model
+from books.models import Book  # Using the existing Book model
 from .bst import BookBST
 
 def get_book_bst():
