@@ -29,16 +29,6 @@ class BookBST:
                     current.right = Node(book)
                     break
                 current = current.right
-            #if book.title.lower() < current.book.title.lower():
-            #    if current.left is None:
-            #        current.left = Node(book)
-            #        break
-            #    current = current.left
-            #else:
-            #    if current.right is None:
-            #        current.right = Node(book)
-            #        break
-            #    current = current.right
     
     def search(self, query, limit=25):
         """Search for books with titles containing the query"""
@@ -64,6 +54,21 @@ class BookBST:
         return results
     
     def build_from_queryset(self, queryset):
-        """Build BST from a Django queryset of books"""
-        for book in queryset:
-            self.insert(book) 
+        """Build a balanced BST from a Django queryset of books"""
+        sorted_books = sorted(queryset, key=lambda book: getattr(book, self.key).lower())
+
+        def build_balanced_tree(books):
+            if not books:
+                return None
+            
+            # Find the middle element
+            mid = len(books) // 2
+            root = Node(books[mid])
+            
+            # Recursively build left and right subtrees
+            root.left = build_balanced_tree(books[:mid])
+            root.right = build_balanced_tree(books[mid + 1:])
+            
+            return root
+
+        self.root = build_balanced_tree(sorted_books)
