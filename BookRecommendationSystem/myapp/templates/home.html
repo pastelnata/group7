@@ -20,7 +20,11 @@
     <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">BookMatch</a>
-        <input id="product" type="text" placeholder="Search..">
+
+        <form action="{% url 'search_results' %}" method="GET">
+            <input type="text" id="product" name="query" class="search-bar" placeholder="Search for books..." value="{{ query }}">
+        </form>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
@@ -51,11 +55,10 @@
         $(function () {
             $("#product").autocomplete({
                 source: "{% url 'autocomplete' %}",
-                minLength: 5
+                minLength: 3
             });
         });
     </script>
-
 
 </body>
 
