@@ -1,9 +1,34 @@
 import json
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
+from .utils import get_sorted_books
 
 # Create your views here.
 #from .models import Library
+
+
+def book_list_example(request):
+    """
+    Example function showing how to use the sorting in a view
+    without modifying your existing templates
+    """
+    # Get sort parameters from request (or use defaults)
+    sort_key = request.GET.get('sort', 'stars')
+    order = request.GET.get('order', 'desc')
+    
+    # Validate sort key against available fields
+    valid_sort_keys = ['stars', 'reviews', 'price', 'published_date']
+    if sort_key not in valid_sort_keys:
+        sort_key = 'stars'
+    
+    # Get sorted books using the merge sort algorithm
+    sorted_books = get_sorted_books(sort_key, order)
+    
+    # Add to context for your existing templates
+    context = {
+        'books': sorted_books,
+        # other context variables your template might need
+    }
 
 
 def autocomplete(request):

@@ -1,5 +1,5 @@
 #remember to change sort_key 
-# This file can be saved as myapp/sorting.py
+
 
 def merge_sort(book, sort_key='stars', order='desc'):
     """
@@ -47,11 +47,18 @@ def merge(left, right, sort_key, order):
     # Compare elements from both lists and merge them in sorted order
     while i < len(left) and j < len(right):
         # Get the values to compare based on the sort key
-        left_value = getattr(left[i], sort_key, 0)  # Default to 0 if attribute doesn't exist
-        right_value = getattr(right[j], sort_key, 0)  # Default to 0 if attribute doesn't exist
+        left_value = getattr(left[i], sort_key, None)  # Default to 0 if attribute doesn't exist
+        right_value = getattr(right[j], sort_key, None)  # Default to 0 if attribute doesn't exist
         
+         # Handle None values - consider None as lowest value
+        if left_value is None and right_value is None:
+            comparison = True  # Arbitrary choice when both are None
+        elif left_value is None:
+            comparison = False if order == 'desc' else True
+        elif right_value is None:
+            comparison = True if order == 'desc' else False
         # Handle specific comparison logic based on data type
-        if sort_key == 'published_date':
+        elif sort_key == 'published_date':
             # For dates: newer dates first for desc, older dates first for asc
             if order == 'desc':
                 comparison = left_value >= right_value
