@@ -23,3 +23,6 @@ def autocomplete(request):
         # titles = [product.title for product in qs]
         return JsonResponse(titles, safe=False)
     return render(request,"home.html")
+
+def homepage(request):
+    return render(request, "homepage.html")
