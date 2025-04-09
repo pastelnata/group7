@@ -4,7 +4,8 @@ from django.db.models.functions import Random
 
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
-from .models import Book
+from books.models import Book
+from search.views import search_books
 # Create your views here.
 
 def libraryview(request):
