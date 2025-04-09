@@ -1,9 +1,10 @@
 import json
+from django.db.models.functions import Random
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from .utils import get_sorted_books
+from .models import Book
 
-# Create your views here.
 #from .models import Library
 
 
