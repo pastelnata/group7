@@ -1,0 +1,38 @@
+{% extends "home.html" %}
+{% block title %} Support Page {% endblock %}
+{% block content %}
+
+<main class="main-content">
+    <section class="common">
+        <h2><br>NEED SOME HELP? CONTACT US<br></h2>
+    </section>        
+
+    <section class="contact-section">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="success-message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                {{ form.subject }}
+            </div>
+            <div class="form-group">
+                <label for="content">Message:</label>
+                {{ form.content }}
+            </div>
+            <button type="submit" id="submitButton">Send Email</button>
+        </form>
+    </section>
+</main>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}

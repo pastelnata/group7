@@ -6,6 +6,12 @@ from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from books.models import Book
 from search.views import search_books
+
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.contrib import messages
+from .forms import SupportForm
+from django.conf import settings
 # Create your views here.
 
 def libraryview(request):
@@ -41,3 +47,26 @@ def top10_page(request):
 
 def homepage(request):
     return render(request, "homepage.html")
+
+def support_view(request):
+    if request.method == 'POST':
+        form = SupportForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            content = form.cleaned_data['content']
+            
+            full_message = f"From: {email}\n\n{content}"
+            
+            send_mail(
+                subject,
+                full_message,
+                settings.DEFAULT_FROM_EMAIL,
+                ['800.attari@gmail.com'], 
+            )
+            messages.success(request, 'Your message has been sent successfully!')
+            return redirect('support')
+    else:
+        form = SupportForm()
+    
+    return render(request, 'myapp/support.html', {'form': form})
