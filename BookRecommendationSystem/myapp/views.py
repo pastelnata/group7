@@ -1,6 +1,10 @@
 import json
 
 from django.db.models.functions import Random
+import pandas as pd # type: ignore
+import itertools
+import numpy as np # type: ignore
+from collections import deque
 
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
@@ -70,3 +74,51 @@ def support_view(request):
         form = SupportForm()
     
     return render(request, 'myapp/support.html', {'form': form})
+
+
+
+## build_graph() function is preparing dataset in a way that makes it usable as a graph.
+#  it is needed to perform graph-based algorithms like Breadth-First Search (BFS).
+
+
+def build_graph():
+    book_qs = Book.objects.all().values()
+    book_df = pd.DataFrame(list(book_qs))
+    sorted_df = book_df.sort_values(by="asin")
+    node_features = sorted_df[[
+        "category_name",  
+        "stars",
+        "reviews",
+        "price",
+        "isKindleUnlimited",
+        "isBestSeller",
+        "isEditorsPick",
+        "isGoodReadsChoice"
+    ]]
+    pd.set_option('mode.chained_assignment', None)
+    node_features["category"] = node_features["category_name"].fillna("Unknown")
+    category_dummies = pd.get_dummies(node_features["category"], prefix="genre")
+    node_features = pd.concat([node_features, category_dummies], axis=1)
+    node_features.drop(["category_name", "category"], axis=1, inplace=True)
+
+    x = node_features.to_numpy()
+    sorted_df = sorted_df.reset_index(drop=True)
+    sorted_df["node_id"] = sorted_df.index
+
+    all_edges = np.array([], dtype=np.int32).reshape((0, 2))
+    authors = sorted_df["author"].unique()
+    for author in authors:
+        author_books = sorted_df[sorted_df["author"] == author]
+        nodes = author_books["node_id"].values
+        if len(nodes) < 2:
+            continue
+        combinations = list(itertools.combinations(nodes, 2))
+        source = [e[0] for e in combinations]
+        target = [e[1] for e in combinations]
+        edges = np.column_stack([source, target])
+        all_edges = np.vstack([all_edges, edges])
+
+    edge_index = all_edges.transpose()
+
+    return x, edge_index, sorted_df
+
