@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to BookMatch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Roboto Mono Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto Mono', monospace;
+        }
+        .text-orange {
+            color: #f97316;
+        }
+        .bg-navy {
+            background-color: #1e293b;
+        }
+        .bg-orange {
+            background-color: #f97316;
+        }
+        @keyframes gradientShift {
+        0% {
+        background-position: 0% 50%;
+            }
+            50% {
+        background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #3b82f6, #1e40af);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+#typewriter::after {
+  content: "|";
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const text = "DISCOVER NEXT YOUR FAVOURITE BOOK...";
+        const target = document.getElementById("typewriter");
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                target.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 80); // Typing speed
+            }
+        }
+
+        typeWriter();
+    });
+</script>
+
+</head>
+<body class="bg-white text-gray-800">
+
+<!-- Smooth Morphing Gradient Waves -->
+<section class="relative min-h-screen flex flex-col justify-center items-center text-white text-center px-6 overflow-hidden">
+    <!-- Animated Gradient Background -->
+    <div class="absolute inset-0 z-0 animated-gradient"></div>
+    <!-- Content -->
+    <div class="relative z-10">
+        <h1 id="typewriter" class="text-5xl font-bold mb-4 font-robotoMono"></h1>
+      <p class="text-xl mb-6">BookMatch helps you find books tailored to your taste using intelligent recommendations.</p>
+      <a href="{% url 'homepage' %}" class="bg-orange text-white font-semibold px-6 py-3 rounded-full shadow hover:bg-orange-500 transition">
+        Start Exploring
+      </a>
+    </div>
+  </section>
+
+</section>
+    <!-- How It Works -->
+    <section class="py-16 bg-gray-50 text-center">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto px-4">
+            <div class="bg-white p-6 rounded-xl shadow">
+                <div class="text-orange text-4xl mb-4">🧠</div>
+                <h3 class="text-xl font-semibold mb-2">Tell Us What You Like</h3>
+                <p>Choose genres, authors, or topics you're interested in.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow">
+                <div class="text-orange text-4xl mb-4">📊</div>
+                <h3 class="text-xl font-semibold mb-2">We Analyze Your Preferences</h3>
+                <p>Our system uses your inputs and recommends based on your taste.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow">
+                <div class="text-orange text-4xl mb-4">📚</div>
+                <h3 class="text-xl font-semibold mb-2">Enjoy Personalized Recommendations</h3>
+                <p>Get a curated list of books that match your style and mood.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-navy text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">Ready to Find Your Next Read?</h2>
+        <p class="mb-6 text-lg">Let’s get started and match you with something great.</p>
+        <a href="{% url 'libraryview' %}" class="bg-orange text-white font-semibold px-8 py-3 rounded-full shadow hover:bg-orange-500 transition">
+            Browse the Library
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-navy text-white text-center">
+        © 2025 BookMatch | Built by Group 7
+    </footer>
+
+</body>
+</html>
