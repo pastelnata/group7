@@ -70,3 +70,6 @@ def support_view(request):
         form = SupportForm()
     
     return render(request, 'myapp/support.html', {'form': form})
+
+def welcome(request):
+    return render(request, 'myapp/welcome.html')
