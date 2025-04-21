@@ -180,6 +180,30 @@
         {% endfor %}
     </div>
 
+
+    <!-- will have to add for and end-->
+
+    <div class="container my-4">
+        <h2 class="mb-3">Suggested Books</h2>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 text-center">
+                    <img src="{{ book.cover_url }}" class="card-img-top" alt="{{ book.title }}"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h6 class="card-title mb-1">{{ book.title }}</h6>
+                        <small class="text-muted">by {{ book.author }}</small>
+                        <div class="mt-2">
+                            <a class="btn btn-sm btn-outline-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="pagination">
         {% if page_obj.has_previous %}
         <a href="?page=1">First</a>
