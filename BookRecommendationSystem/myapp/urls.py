@@ -9,8 +9,7 @@ urlpatterns = [
     path('library/',views.libraryview,name="libraryview"),
     path('support/', views.support_view, name='support'),
     path('search/', search_results, name='search_results'),
-
-    path('search_results/', views.bfs_suggestions, name='search_results'),
+    path('test/', views.bfs_suggestions, name='bfs_suggestions'),
 
 ]
 

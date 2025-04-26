@@ -51,7 +51,7 @@ def search_results(request):
     # NEW: Get suggestions
     suggested_books = get_suggested_books(query)
 
-    return render(request, 'search_results.html', {
+    return render(request, 'test.html', {
         'results': results,
         'query': query,
         'suggested_books': suggested_books,  # <-- pass to template
