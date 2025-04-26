@@ -19,13 +19,6 @@ from django.conf import settings
 # Create your views here.
 
 
-GRAPH_DATA = None
-
-def get_graph():
-    global GRAPH_DATA
-    if GRAPH_DATA is None:
-        GRAPH_DATA = build_graph()
-    return GRAPH_DATA
 
 
 
