@@ -18,8 +18,13 @@ from .forms import SupportForm
 from django.conf import settings
 # Create your views here.
 
+GRAPH_DATA = None
 
-
+def get_graph():
+    global GRAPH_DATA
+    if GRAPH_DATA is None:
+        GRAPH_DATA = build_graph()
+    return GRAPH_DATA
 
 
 def libraryview(request):
@@ -89,7 +94,7 @@ def support_view(request):
 
 
 def build_graph():
-    book_qs = Book.objects.all().values()
+    book_qs = Book.objects.all().values()[:100]
     book_df = pd.DataFrame(list(book_qs))
     sorted_df = book_df.sort_values(by="asin")
     node_features = sorted_df[[
