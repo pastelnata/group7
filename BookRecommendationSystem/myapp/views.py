@@ -18,6 +18,17 @@ from .forms import SupportForm
 from django.conf import settings
 # Create your views here.
 
+
+GRAPH_DATA = None
+
+def get_graph():
+    global GRAPH_DATA
+    if GRAPH_DATA is None:
+        GRAPH_DATA = build_graph()
+    return GRAPH_DATA
+
+
+
 def libraryview(request):
     event_list=Book.objects.all()
     # random books since loading whole database makes the system loads for at least 5 min or it is breaking 
@@ -81,6 +92,9 @@ def support_view(request):
 #  it is needed to perform graph-based algorithms like Breadth-First Search (BFS).
 
 
+# put this outside of any function in your views.py
+
+
 def build_graph():
     book_qs = Book.objects.all().values()
     book_df = pd.DataFrame(list(book_qs))
@@ -122,3 +136,45 @@ def build_graph():
 
     return x, edge_index, sorted_df
 
+def bfs(start_node, edge_index, num_nodes):
+    adj_list = [[] for _ in range(num_nodes)]
+    for src, tgt in edge_index.T:
+        adj_list[src].append(tgt)
+        adj_list[tgt].append(src)
+
+    visited = [False] * num_nodes
+    queue = deque([start_node])  
+    visited[start_node] = True
+    traversal_order = []
+
+    while queue:
+        current = queue.popleft()
+        traversal_order.append(current)
+        for neighbor in adj_list[current]:
+            if not visited[neighbor]:
+                visited[neighbor] = True
+                queue.append(neighbor)
+
+    return traversal_order
+
+def bfs_suggestions(request):
+    query = request.GET.get('query', '')  
+    x, edge_index, sorted_df = get_graph()  # <-- use cached graph
+
+    suggested_books = []
+
+    if query:
+        try:
+            book_row = sorted_df[sorted_df['title'].str.contains(query, case=False, na=False)].iloc[0]
+            start_node = book_row['node_id']
+
+            traversal = bfs(start_node, edge_index, len(sorted_df))
+            suggested_books = sorted_df[sorted_df['node_id'].isin(traversal[1:6])]
+
+        except IndexError:
+            pass  # no matching book
+
+    context = {
+        'suggested_books': suggested_books
+    }
+    return render(request, "test.html", context)

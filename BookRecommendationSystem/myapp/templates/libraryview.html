@@ -159,26 +159,6 @@
         <h2>Here are our picks for you:</h2>
     </div>
 
-    <div class="blockofblocks">
-        {% for event in event_list %}
-        <div class="block">
-            <img src="{{ event.imgURL }}" alt="Book Cover">
-            <div class="book-details">
-                <div class="titleofthebook">
-                    <p>{{ event.title }}</p>
-                </div>
-                <p><strong>Author:</strong> {{ event.author }}</p>
-                <p><strong>Price:</strong> {{ event.price }}</p>
-                <p><strong>Category:</strong> {{ event.category_name }}</p>
-                <div class="rating">
-                    <span class="star">⭐ {{ event.stars }}</span>
-                </div>
-                <a href="{{ event.productURL }}" target="_blank" class="read-more">Read more >></a>
-            </div>
-            <button class="delete-button">🗑</button>
-        </div>
-        {% endfor %}
-    </div>
 
 
     <!-- will have to add for and end-->
@@ -201,6 +181,31 @@
             </div>
         </div>
     </div>
+
+
+    <div class="blockofblocks">
+        {% for event in event_list %}
+        <div class="block">
+            <img src="{{ event.imgURL }}" alt="Book Cover">
+            <div class="book-details">
+                <div class="titleofthebook">
+                    <p>{{ event.title }}</p>
+                </div>
+                <p><strong>Author:</strong> {{ event.author }}</p>
+                <p><strong>Price:</strong> {{ event.price }}</p>
+                <p><strong>Category:</strong> {{ event.category_name }}</p>
+                <div class="rating">
+                    <span class="star">⭐ {{ event.stars }}</span>
+                </div>
+                <a href="{{ event.productURL }}" target="_blank" class="read-more">Read more >></a>
+            </div>
+            <button class="delete-button">🗑</button>
+        </div>
+        {% endfor %}
+    </div>
+
+
+
 
 
 
