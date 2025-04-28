@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Special+Elite&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/stack-of-books.png' %}">
     <title>
         {% block title %}
         Book Match
@@ -19,7 +21,7 @@
 <body>
     <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">BookMatch</a>
+        <a class="navbar-brand" href="/">BookMatch</a>
 
         <form action="{% url 'search_results' %}" method="GET">
             <input type="text" id="product" name="query" class="search-bar" placeholder="Search for books..." value="{{ query }}">
