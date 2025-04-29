@@ -1,0 +1,147 @@
+{% extends "home.html" %}
+
+{% block title %}Top 10 Books{% endblock %}
+
+{% block head %}
+    {{ block.super }}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        width: 100%;
+        max-width: 100vw;
+        margin: 20px auto;
+        justify-content: center;
+    }
+
+    .main-container h2 {
+        color: black;
+        text-align: center;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        font-size: 16px;
+    }
+
+    .book-container {
+        width: 100%; 
+        max-width: 30vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin: 20px auto;
+        border: 2px solid #ece5dd;
+        border-radius: 10px;
+        padding: 30px;
+        background-color: #ece5dd;
+    }
+
+    .book {
+        background-color: #EEEEFF;
+        width: 100%;
+        height: 120px;
+        padding: 15px;
+        border-radius: 10px;
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        position: relative;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border: 1px solid #ece5dd;
+    }
+
+    .book img {
+        width: 60px;
+        height: 90px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .book-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .book-title h3 {
+        width: 15vw;
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .book-details p {
+        font-size: 12px;
+        white-space: nowrap;
+        margin-bottom: 5px;
+    }
+
+    .rating {
+        display: flex;
+        align-items: center;
+    }
+
+    .star {
+        color: #ffcc66;
+        font-size: 13px;
+    }
+
+    .read-more {
+        font-size: 12px;
+        color: #28587B;
+        text-decoration: none;
+        transition: color 0.2s;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .read-more:hover {
+        color: #0e1d29;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<body>
+    <div class="main-container">
+        {% for category, books in top10s.items %}
+        <div>
+            <div class="book-container">
+                <h2>Top 10 {{ category }}</h2>
+                {% for book in books %}
+                <div class="book">
+                    <img src="{{ book.imgURL }}" alt="Book Cover" />
+                    <div class="book-details">
+                        <div class="book-title">
+                            <h3>{{ book.title }}</h3>
+                        </div>
+                        <p><strong>Author:</strong> {{ book.author }}</p>
+                        <p><strong>Price:</strong> {{ book.price }}€</p>
+                        <div class="rating">
+                            <span class="star">⭐ {{ book.stars|floatformat:1 }}</span>
+                        </div>
+                        <a href="{{ book.productURL }}" target="_blank" class="read-more">Read more >></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}

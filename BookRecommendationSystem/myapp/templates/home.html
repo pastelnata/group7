@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    {% block head %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,13 +14,12 @@
     </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"rel="stylesheet" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
-    
-
+    {% endblock %}  
 </head>
 <body>
     <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">BookMatch</a>
+        <a class="navbar-brand" href="{% url 'homepage' %}">BookMatch</a>
 
         <form action="{% url 'search_results' %}" method="GET">
             <input type="text" id="product" name="query" class="search-bar" placeholder="Search for books..." value="{{ query }}">
@@ -31,10 +31,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/homepage">Home</a>
+                    <a class="nav-link" href="{% url 'homepage' %}">Home</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="/top10">Top 10</a>
+                    <a class="nav-link" href="{% url 'top10_page' %}">Top 10</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
