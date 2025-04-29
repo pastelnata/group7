@@ -1,5 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "home.html" %}
+
+{% block title %}Top 10 Books{% endblock %}
+
+{% block head %}
+{{ block.super }}
 
 <head>
     <meta charset="UTF-8" />
@@ -19,22 +23,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 30px;
-            background-color: #f9f9f9;
+            padding: 50px;
+            background-color: #28587B;
         }
 
         .descriptionofthepage {
             font-size: 26px;
             font-weight: bold;
             margin-bottom: 25px;
-            color: #444;
+            color: #f8f0f0;
             text-align: center;
         }
 
         .blockofblocks {
             display: flex;
+            margin-top: 30px;
             flex-direction: column;
             align-items: center;
+            align-content: center;
+            align-self: center;
+            margin-left: 150px;
             gap: 25px;
             width: 100%;
             max-width: 700px;
@@ -154,10 +162,13 @@
     <title>Book Recommendations</title>
 </head>
 
+
+{% endblock %}
+
+{% block content %}
+
 <body>
-    <div class="descriptionofthepage">
-        <h2>Here are our picks for you:</h2>
-    </div>
+
 
     <div class="blockofblocks">
         {% for event in event_list %}
@@ -193,6 +204,8 @@
         <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
         {% endif %}
     </div>
-</body>
 
-</html>
+</body>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
