@@ -1,5 +1,3 @@
-#remember to change sort_key 
-
 
 def merge_sort(book, sort_key='stars', order='desc'):
     """

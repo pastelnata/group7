@@ -1,6 +1,6 @@
 # This file should be saved as myapp/utils.py
 
-from .sorting import merge_sort
+from .merge_sort import merge_sort
 from .models import Book
 
 def get_sorted_books(sort_key='stars', order='desc', filters=None):
