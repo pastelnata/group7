@@ -14,7 +14,7 @@ def search_results(request):
         start_id = results[0].id
         try:
             # Get related books using BFS
-            suggestions = bfs(start_id, return_books=True)[0:5]  # Limit to 3
+            suggestions = bfs(start_id, return_books=True)[0:3]  # Limit to 3
         except Exception as e:
             print(f"BFS error: {e}")
 
