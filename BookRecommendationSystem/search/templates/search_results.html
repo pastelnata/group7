@@ -7,43 +7,232 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
     <style>
-        .results-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .result-item {
-            margin: 10px 0;
-        }
-        .recommendations {
-    margin-top: 40px;
-    text-align: center;
-    background-color: #f0f0f0; /* Added background color for visibility */
-    padding: 20px;
-    border: 1px solid #ddd;
-}
+        body {
+            font-size: 17px;
 
-        .recommendation-item {
-            margin: 8px 0;
-            color: #444;
+            background-color: #28587B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Instrument Serif', serif;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #f8f0f0;
+        }
+
+        .blockofblocks {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .block {
+            background-color: #fff;
+            width: 100%;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .block img {
+            width: 100px;
+            height: 140px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .book-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .titleofthebook p {
+            font-weight: bold;
+            font-size: 20px;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .book-details p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .star {
+            color: gold;
+            font-size: 18px;
+        }
+
+        .read-more {
+            font-size: 14px;
+            color: #007bff;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .read-more:hover {
+            color: #0056b3;
+        }
+
+        .results-container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f8f0f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-container h3 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .blockofblocks {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .block {
+            background-color: #fff;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .block:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .block img {
+            width: 100px;
+            height: 140px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .book-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .titleofthebook p {
+            font-weight: bold;
+            font-size: 20px;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        .book-details p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .star {
+            color: gold;
+            font-size: 18px;
+        }
+
+        .read-more {
+            font-size: 14px;
+            color: #007bff;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .read-more:hover {
+            color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="results-container">
         {% if results %}
-            <h3>Search Results:</h3>
-            <ul>
-                {% for book in results %}
-                <li class="result-item" data-book-id="{{ book.id }}">
-                    {{ book.title }} by {{ book.author }}
-                </li>
+        <h3>Search Results:</h3>
+        <ul>
+            {% for event in results %}
+            <div class="block">
+                <img src="{{ event.imgURL }}" alt="Book Cover">
+                <div class="book-details">
+                    <div class="titleofthebook">
+                        <p>{{ event.title }}</p>
+                    </div>
+                    <p><strong>Author:</strong> {{ event.author }}</p>
+                    <p><strong>Price:</strong> {{ event.price }}</p>
+                    <p><strong>Category:</strong> {{ event.category_name }}</p>
+                    <div class="rating">
+                        <span class="star">⭐ {{ event.stars }}</span>
+                    </div>
+                    <a href="{{ event.productURL }}" target="_blank" class="read-more">Read more >></a>
+                </div>
                 {% endfor %}
-            </ul>
-            
+        </ul>
+
         {% else %}
-            {% if query %}
-                <p>No results found for "{{ query }}"</p>
-            {% endif %}
+        {% if query %}
+        <p>No results found for "{{ query }}"</p>
+        {% endif %}
         {% endif %}
     </div>
 
@@ -52,13 +241,13 @@
         <h3>Recommended Books:</h3>
         <ul>
             {% for book in recommended %}
-                <li class="recommendation-item">{{ book.title }} by {{ book.author }}</li>
+            <li class="recommendation-item">{{ book.title }} by {{ book.author }}</li>
             {% endfor %}
         </ul>
-    {% endif %}
+        {% endif %}
     </div>
 
- 
-    
+
+
 </body>
 {% endblock %}
