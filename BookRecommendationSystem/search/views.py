@@ -13,7 +13,7 @@ def search_results(request):
     if results:
         first_result = results[0]
         # Limit to top 100 books for graph building to prevent memory overload
-        graph = build_book_graph(limit=100)  # You can adjust this limit as necessary
+        graph = build_book_graph(limit=5000)  # You can adjust this limit as necessary
         recommended = bfs_recommendations(first_result.id, graph, limit=10)
     
     return render(request, 'search_results.html', {

@@ -1,8 +1,8 @@
 from collections import defaultdict
 from books.models import Book
 
-def build_book_graph(limit=75000):
-    books = Book.objects.all()[:limit]  # Limit the books fetched to avoid memory overload
+def build_book_graph(limit=10000):
+    books = Book.objects.all()[:limit]  
     graph = {book.id: set() for book in books}
     
     for i, book1 in enumerate(books):
