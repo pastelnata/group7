@@ -207,33 +207,41 @@
 </head>
 
 <body>
-    <div class="results-container">
-        {% if results %}
-        <h3>Search Results :</h3>
-        <ul>
-            {% for event in results %}
-            <div class="block">
-                <img src="{{ event.imgURL }}" alt="Book Cover">
-                <div class="book-details">
-                    <div class="titleofthebook">
-                        <p>{{ event.title }}</p>
-                    </div>
-                    <p><strong>Author:</strong> {{ event.author }}</p>
-                    <p><strong>Price:</strong> {{ event.price }}</p>
-                    <p><strong>Category:</strong> {{ event.category_name }}</p>
-                    <div class="rating">
-                        <span class="star">⭐ {{ event.stars }}</span>
-                    </div>
-                    <a href="{{ event.productURL }}" target="_blank" class="read-more">Read more >></a>
-                </div>
-                {% endfor %}
-        </ul>
+    <h1>Search Results for: {{ query }}</h1>
 
-        {% else %}
-        {% if query %}
-        <p>No results found for "{{ query }}"</p>
-        {% endif %}
-        {% endif %}
+<div class="search-results">
+    <ul>
+        {% for book in results %}
+            <li>
+                <a href="?query={{ query }}&book_id={{ book.id }}">
+                    {{ book.title }} by {{ book.author }}
+                </a>
+            </li>
+        {% empty %}
+            <p>No results found.</p>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if selected_book %}
+    <div class="book-details">
+        <h2>{{ selected_book.title }}</h2>
+        <p><strong>Author:</strong> {{ selected_book.author }}</p>
+        <p><strong>Category:</strong> {{ selected_book.category_name }}</p>
+        <p><strong>Description:</strong> {{ selected_book.description }}</p>  <!-- Adjust if you have a description field -->
+        
+        <h3>Recommended Books</h3>
+        <ul>
+            {% for recommended_book in recommended %}
+                <li>
+                    <a href="?query={{ query }}&book_id={{ recommended_book.id }}">
+                        {{ recommended_book.title }} by {{ recommended_book.author }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
     </div>
 
     <div class="recommendations" id="recommendations-container">

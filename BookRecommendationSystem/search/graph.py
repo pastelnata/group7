@@ -1,7 +1,7 @@
 from collections import defaultdict
 from books.models import Book
 
-def build_book_graph(limit=10000):
+def build_book_graph(limit=5000):
     books = Book.objects.all()[:limit]  
     graph = {book.id: set() for book in books}
     

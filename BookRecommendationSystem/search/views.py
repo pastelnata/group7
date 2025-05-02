@@ -7,19 +7,31 @@ from search.graph import build_book_graph, bfs_recommendations
 
 def search_results(request):
     query = request.GET.get('query', '')
-    results = search_books(query)  # BST search
+    book_id = request.GET.get('book_id')  # Get book_id if available from the request
+
+    # Get search results
+    results = search_books(query)
     
     recommended = []
-    if results:
-        first_result = results[0]
-        # Limit to top 100 books for graph building to prevent memory overload
-        graph = build_book_graph(limit=5000)  # You can adjust this limit as necessary
-        recommended = bfs_recommendations(first_result.id, graph, limit=10)
+    selected_book = None
     
+    # If a book is selected, fetch its details and recommendations
+    if book_id:
+        selected_book = get_object_or_404(Book, id=book_id)
+        graph = build_book_graph()
+        recommended = bfs_recommendations(selected_book.id, graph, limit=10)
+
+    # Otherwise, use the first result for recommendations
+    elif results:
+        first_result = results[0]
+        graph = build_book_graph()
+        recommended = bfs_recommendations(first_result.id, graph, limit=10)
+
     return render(request, 'search_results.html', {
         'results': results,
         'query': query,
         'recommended': recommended,
+        'selected_book': selected_book,
     })
 
 def top10_results(request):
