@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "home.html" %}
+{% block title %} Search Result {% endblock %}
+{% block content %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +14,18 @@
         .result-item {
             margin: 10px 0;
         }
+        .recommendations {
+    margin-top: 40px;
+    text-align: center;
+    background-color: #f0f0f0; /* Added background color for visibility */
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+        .recommendation-item {
+            margin: 8px 0;
+            color: #444;
+        }
     </style>
 </head>
 <body>
@@ -20,14 +34,31 @@
             <h3>Search Results:</h3>
             <ul>
                 {% for book in results %}
-                    <li class="result-item">{{ book.title }} by {{ book.author }}</li>
+                <li class="result-item" data-book-id="{{ book.id }}">
+                    {{ book.title }} by {{ book.author }}
+                </li>
                 {% endfor %}
             </ul>
+            
         {% else %}
             {% if query %}
                 <p>No results found for "{{ query }}"</p>
             {% endif %}
         {% endif %}
     </div>
+
+    <div class="recommendations" id="recommendations-container">
+        {% if recommended %}
+        <h3>Recommended Books:</h3>
+        <ul>
+            {% for book in recommended %}
+                <li class="recommendation-item">{{ book.title }} by {{ book.author }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+
+ 
+    
 </body>
-</html>
+{% endblock %}
