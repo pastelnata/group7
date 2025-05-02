@@ -1,44 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "home.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-    <style>
-        .results-container {
-            margin-top: 20px;
-            text-align: center;
-        }
+{% block title %}Search Results{% endblock %}
 
-        .result-item {
-            margin: 10px 0;
-        }
-    </style>
-</head>
+{% block head %}
+{{ block.super }}
+<link href="https://fonts.googleapis.com/css?family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+    body {
+        background-color: #28587B;
+        font-family: 'Instrument Serif', serif;
+        color: #f8f0f0;
+    }
 
-<body>
-    <div class="results-container">
-        {% if results %}
-        <h3>Search Results:</h3>
-        <ul>
-            {% for book in results %}
-            <li class="result-item">{{ book.title }} by {{ book.author }}</li>
-            {% endfor %}
-        </ul>
+    .descriptionofthepage {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-align: center;
+    }
 
-        <h3>Recommended Books:</h3>
-        <ul>
-            {% for book in suggestions %}
-            <li class="result-item">{{ book.title }} by {{ book.author }}</li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        {% if query %}
-        <p>No results found for "{{ query }}"</p>
-        {% endif %}
-        {% endif %}
+    .blockofblocks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .block {
+        background-color: #fff;
+        color: #222;
+        width: 100%;
+        padding: 20px;
+        border-radius: 12px;
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: 0.2s ease-in-out;
+    }
+
+    .block:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .block img {
+        width: 100px;
+        height: 140px;
+        background-color: lightgray;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    .book-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .titleofthebook p {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    .book-details p {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 8px;
+    }
+
+    .star {
+        color: gold;
+        font-size: 18px;
+    }
+
+    .read-more {
+        font-size: 14px;
+        color: #007bff;
+        margin-top: 10px;
+        text-decoration: none;
+    }
+
+    .read-more:hover {
+        color: #0056b3;
+    }
+
+    .section-title {
+        font-size: 24px;
+        margin: 30px 0 10px;
+        color: #fff;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% if results %}
+<div class="section-title">Matching Books:</div>
+<div class="blockofblocks">
+    {% for book in results %}
+    <div class="block">
+        <img src="{{ book.imgURL }}" alt="Book Cover">
+        <div class="book-details">
+            <div class="titleofthebook">
+                <p>{{ book.title }}</p>
+            </div>
+            <p><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Price:</strong> {{ book.price }}</p>
+            <p><strong>Category:</strong> {{ book.category_name }}</p>
+            <div class="rating">
+                <span class="star">⭐ {{ book.stars }}</span>
+            </div>
+            <a href="{{ book.productURL }}" target="_blank" class="read-more">Read more >></a>
+        </div>
     </div>
-</body>
+    {% endfor %}
+</div>
 
-</html>
+<div class="section-title">Recommended Books:</div>
+{% if suggestions %}
+<div class="blockofblocks">
+    {% for book in suggestions %}
+    <div class="block">
+        <img src="{{ book.imgURL }}" alt="Book Cover">
+        <div class="book-details">
+            <div class="titleofthebook">
+                <p>{{ book.title }}</p>
+            </div>
+            <p><strong>Author:</strong> {{ book.author }}</p>
+            <p><strong>Price:</strong> {{ book.price }}</p>
+            <p><strong>Category:</strong> {{ book.category_name }}</p>
+            <div class="rating">
+                <span class="star">⭐ {{ book.stars }}</span>
+            </div>
+            <a href="{{ book.productURL }}" target="_blank" class="read-more">Read more >></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p style="text-align: center;">No similar books found.</p>
+{% endif %}
+{% else %}
+<p style="text-align: center;">No results found for "{{ query }}"</p>
+{% endif %}
+{% endblock %}
