@@ -158,6 +158,10 @@
             background-color: #0056b3;
             font-weight: bold;
         }
+
+        .texttop {
+            padding-top: 20px;
+        }
     </style>
     <title>Book Recommendations</title>
 </head>
@@ -169,7 +173,7 @@
 
 <body>
 
-
+    <h1 class="texttop">You may like: </h1>
     <div class="blockofblocks">
         {% for event in event_list %}
         <div class="block">

@@ -42,3 +42,6 @@ def search_results(request):
 def top10_results(request):
     top10s = get_top10_books()
     return render(request, 'top10.html', {'top10s': top10s})
+
+
+    
