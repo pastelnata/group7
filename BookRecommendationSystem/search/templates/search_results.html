@@ -148,6 +148,33 @@
     </div>
     {% endfor %}
 </div>
+
+
+
+{% if author_suggestion %}
+<div class="section-title">Another Book by {{ author_suggestion.author }}:</div>
+<div class="blockofblocks">
+    <div class="block">
+        <img src="{{ author_suggestion.imgURL }}" alt="Book Cover">
+        <div class="book-details">
+            <div class="titleofthebook">
+                <p>{{ author_suggestion.title }}</p>
+            </div>
+            <p><strong>Author:</strong> {{ author_suggestion.author }}</p>
+            <p><strong>Price:</strong> {{ author_suggestion.price }}</p>
+            <p><strong>Category:</strong> {{ author_suggestion.category_name }}</p>
+            <div class="rating">
+                <span class="star">⭐ {{ author_suggestion.stars }}</span>
+            </div>
+            <a href="{{ author_suggestion.productURL }}" target="_blank" class="read-more">Read more >></a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
 {% else %}
 <p style="text-align: center;">No similar books found.</p>
 {% endif %}
