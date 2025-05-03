@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .search.bst_manager import search_books
 from .sorting.get_top10 import get_top10_books
-from .sorting.bfs import bfs  # Import your bfs function
+from .search.bfs import bfs  # Import your bfs function
 
 def search_results(request):
     query = request.GET.get('query', '')
@@ -10,13 +10,14 @@ def search_results(request):
     suggestions = []
 
     if results:
-        # Get the first result's ID to run BFS on
         start_id = results[0].id
-        try:
-            # Get related books using BFS
-            suggestions = bfs(start_id, return_books=True)[0:3]  # Limit to 3
-        except Exception as e:
-            print(f"BFS error: {e}")
+    try:
+        # Get related books using BFS, skipping the first (searched book itself)
+        related_books = bfs(start_id, return_books=True)
+        suggestions = [book for book in related_books if book.id != start_id][:3]
+    except Exception as e:
+        print(f"BFS error: {e}")
+
 
     return render(request, 'search_results.html', {
         'results': results,
