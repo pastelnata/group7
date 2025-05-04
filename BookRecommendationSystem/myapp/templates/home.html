@@ -5,6 +5,66 @@
     {% block head %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        input#product {
+            width: 250px;
+            transition: width 0.3s ease;
+        }
+
+        input#product:focus {
+            width: 350px;
+        }
+
+        /* Keep BookMatch on the left */
+        .navbar-brand {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        /* Center search bar using absolute positioning */
+        .navbar .form-inline {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Style the search input group */
+        .input-group {
+            width: 300px;
+            transition: width 0.3s ease;
+        }
+
+        .input-group:focus-within {
+            width: 400px;
+        }
+
+        /* Make search input more modern */
+        #product {
+            border-radius: 20px 0 0 20px !important;
+            border: 1px solid #ced4da;
+        }
+
+        /* Style the search button */
+        .input-group-append .btn {
+            border-radius: 0 20px 20px 0 !important;
+        }
+
+        /* Align the nav links to the right */
+        .navbar-nav {
+            margin-left: auto;
+        }
+
+        .navbar-nav .nav-link {
+            margin-left: 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #007bff;
+        }
+    </style>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Special+Elite&display=swap"
@@ -23,12 +83,18 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="{% url 'welcome' %}">BookMatch</a>
+            <a class="navbar-brand" href="{% url 'homepage' %}">BookMatch</a>
 
-            <form action="{% url 'search_results' %}" method="GET">
-                <input type="text" id="product" name="query" class="search-bar" placeholder="Search for books..."
-                    value="{{ query }}">
+            <form action="{% url 'search_results' %}" method="GET" class="form-inline my-2 my-lg-0 ml-auto">
+                <div class="input-group">
+                    <input type="text" id="product" name="query" class="form-control rounded-left"
+                        placeholder="Search for books..." value="{{ query }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">🔍</button>
+                    </div>
+                </div>
             </form>
+
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
@@ -45,8 +111,12 @@
                         <a class="nav-link" href="#">About</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'libraryview' %}">Lucky Charm</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'support' %}">Contact</a>
                     </li>
+
                 </ul>
             </div>
         </nav>
