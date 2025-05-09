@@ -1,0 +1,126 @@
+{% extends "home.html" %}
+{% block title %} About {% endblock %}
+{% block content %}
+{% load static %}
+<link href="https://fonts.googleapis.com/css?family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+ body {
+        background-color: #28587B;
+        color: #f8f0f0;
+        line-height: 1.6;
+        padding: 20px;
+    }
+    .team {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    justify-items: center;
+    margin: 20px;
+    padding-bottom: 8%;
+}
+
+
+.member {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 100%;
+    padding: 5px;
+}
+
+
+.member-image {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    /* Optional border for better aesthetics */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dreamteam {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    font-size: 2rem;
+    color: #002e5b;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.dreamteam:hover {
+    color: #710404;
+}
+
+/* stuff for the edit page*/
+
+.alarm_button {
+    display: inline-block;
+    padding: 10px;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #007bff;
+    color: white;
+    background-color: #0E3386;
+    border-radius: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px 0;
+}
+
+.alarm_button:hover {
+    background-color: beige;
+    color: blue;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+</style>
+<body>
+    <div class="dreamteam">
+        <h1 id="dream-team-title">Dream Team</h1>
+    </div>
+    <div class="team">
+
+
+        <div class="member"><img class="member-image" src="{% static 'images/ada.jpg' %}" alt="Ada">
+            ><br>
+            <h3> Adriana Jaworska</h3>
+        </div>
+        <div class="member"><img class="member-image" src="{% static 'images/ada.jpg' %}" alt="Iana"><br>
+            <h3>Iana Pavliuc</h3>
+        </div>
+        <div class="member"><img class="member-image" src="{% static 'images/ada.jpg' %}" alt="Daniel"><br>
+            <h3>Daniel Vacas Crespo</h3>
+        </div>
+
+        <div class="member"><img class="member-image" src="{% static 'images/ada.jpg' %}" alt="Dainius"><br>
+            <h3>Dainius Čeliauskas</h3>
+        </div>
+        <div class="member"><img class="member-image" src="{% static 'images/ada.jpg' %}" alt="Marius"><br>
+            <h3>Marius Chirița </h3>
+        </div>
+        <div class="member"><img class="member-image" src="{% static 'images/ada.jpg' %}" alt="Maciej"><br>
+            <h3>Maciej Grasela</h3>
+        </div>
+
+
+    </div>
+  </body>
+  {% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% endblock %}
