@@ -59,3 +59,6 @@ def support_view(request):
 
 def welcome(request):
     return render(request, 'myapp/welcome.html')
+
+def about(request):
+    return render(request, 'myapp/about.html')
