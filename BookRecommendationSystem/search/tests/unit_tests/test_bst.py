@@ -1,11 +1,9 @@
 from django.test import TestCase
 from unittest.mock import patch, MagicMock
-from .views import search_books
-
-# Create your tests here.
+from ...views import search_books
 
 class SearchBooksTests(TestCase):
-    @patch('search.views.get_book_bst')
+    @patch('search.search.bst_manager.get_book_bst')
     def test_search_books_with_valid_query(self, mock_get_book_bst):
         # Mock the BST search results
         mock_title_bst = MagicMock()
@@ -28,7 +26,7 @@ class SearchBooksTests(TestCase):
         self.assertIn('Book3', results)
         self.assertIn('Book4', results)
 
-    @patch('search.views.get_book_bst')
+    @patch('search.search.bst_manager.get_book_bst')
     def test_search_books_with_empty_query(self, mock_get_book_bst):
         # Call the function with an empty query
         results = search_books(query="", limit=5)
@@ -36,7 +34,7 @@ class SearchBooksTests(TestCase):
         # Verify the results are empty
         self.assertEqual(results, [])
 
-    @patch('search.views.get_book_bst')
+    @patch('search.search.bst_manager.get_book_bst')
     def test_search_books_with_limit(self, mock_get_book_bst):
         # Mock the BST search results
         mock_title_bst = MagicMock()

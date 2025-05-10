@@ -34,9 +34,12 @@ def search_books(query, limit=25):
     print('Bsts built.')
 
     print('searching...')
-    title_results = title_bst.search(query, limit // 3)
-    author_results = author_bst.search(query, limit // 3)
-    genre_results = genre_bst.search(query, limit // 3)
+    per_bst_limit = limit // 3
+    remaining_limit = limit - (per_bst_limit * 3)
+
+    title_results = title_bst.search(query, per_bst_limit + (1 if remaining_limit > 0 else 0))
+    author_results = author_bst.search(query, per_bst_limit + (1 if remaining_limit > 1 else 0))
+    genre_results = genre_bst.search(query, per_bst_limit)
     print('search done.')
 
     combined_results = []
