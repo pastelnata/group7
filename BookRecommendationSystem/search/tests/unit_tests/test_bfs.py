@@ -1,6 +1,6 @@
 from django.test import TestCase
 from unittest.mock import patch, MagicMock
-from ..search.bfs import bfs
+from ...search.bfs import bfs
 
 class BFSTests(TestCase):
     @patch('search.search.bfs.build_graph_adj_list')

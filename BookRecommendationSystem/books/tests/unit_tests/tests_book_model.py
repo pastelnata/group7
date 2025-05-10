@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Book
+from ...models import Book
 
 class BookModelTests(TestCase):
     def setUp(self):

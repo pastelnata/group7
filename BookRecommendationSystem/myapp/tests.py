@@ -5,7 +5,6 @@ from books.models import Book
 from django.core.mail import outbox
 
 class MyAppViewTests(TestCase):
-
     def test_autocomplete_view(self):
         # Test the autocomplete view
         Book.objects.create(title="Test Book 1")

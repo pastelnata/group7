@@ -1,6 +1,6 @@
 from django.test import TestCase
 from unittest.mock import patch, MagicMock
-from ..views import search_books
+from ...views import search_books
 
 class SearchBooksTests(TestCase):
     @patch('search.search.bst_manager.get_book_bst')

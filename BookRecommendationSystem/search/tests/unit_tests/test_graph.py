@@ -1,7 +1,7 @@
 from django.test import TestCase
 from unittest.mock import patch, MagicMock
-from ..search.bfs import bfs
-from ..search.graph import build_graph_adj_list
+from ...search.bfs import bfs
+from ...search.graph import build_graph_adj_list
 
 class GraphTests(TestCase):
     @patch('search.search.graph.Book.objects.all')
