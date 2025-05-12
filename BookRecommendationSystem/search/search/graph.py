@@ -15,6 +15,8 @@ def build_graph_adj_list():
     # Group books by category
     for book in books:
         category_groups[book.category_id].append(book)
+        if book.id not in adj:
+            adj[book.id] = []
 
     # Create edges between all books in the same category
     for group in category_groups.values():
