@@ -2,94 +2,197 @@
 {% block title %} Home Page {% endblock %}
 {% block content %}
 
-
 <div class="inner-box">
-        <h1>Pick your favorite tags📙</h1>
-        <div class="button-grid">
-                <button class="option-btn">Option 1</button>
-                <button class="option-btn">Option 2</button>
-                <button class="option-btn">Option 3</button>
-                <button class="option-btn">Option 4</button>
-                <button class="option-btn">Option 5</button>
-                <button class="option-btn">Option 6</button>
-                <button class="option-btn">Option 7</button>
-                <button class="option-btn">Option 8</button>
-                <button class="option-btn">Option 9</button>
-                <button class="option-btn">Option 1</button>
-                <button class="option-btn">Option 2</button>
-                <button class="option-btn">Option 1</button>
-                <button class="option-btn">Option 2</button>
-                <button class="option-btn">Option 3</button>
-                <button class="option-btn">Option 4</button>
-                <button class="option-btn">Option 5</button> 
-            </div>
-            <button class="submit-btn">SUBMIT</button>
-        </div>
+    <h1>Pick your favorite tags📙</h1>
+    <div class="button-grid">
+        <button class="option-btn" data-type="bestseller">Best Sellers</button>
+        <button class="option-btn" data-type="editors-pick">Editor's Picks</button>
+        <button class="option-btn" data-type="goodreads-choice">Goodreads Choice</button>
+        <button class="option-btn" data-type="highly-rated">Highly Rated</button>
+        <button class="option-btn" data-type="new-releases">New Releases</button>
+        <button class="option-btn" data-type="kindle-unlimited">Kindle Unlimited</button>
+    </div>
+</div>
 
 <div class="inner-box">
     <h1>Pick your favorite genres📙</h1>
     <div class="button-grid">
-            <button class="option-btn">Option 1</button>
-            <button class="option-btn">Option 2</button>
-            <button class="option-btn">Option 3</button>
-            <button class="option-btn">Option 4</button>
-            <button class="option-btn">Option 5</button>
-            <button class="option-btn">Option 6</button>
-            <button class="option-btn">Option 7</button>
-            <button class="option-btn">Option 8</button>
-            <button class="option-btn">Option 9</button>
-            <button class="option-btn">Option 1</button>
-            <button class="option-btn">Option 2</button>
-            <button class="option-btn">Option 1</button>
-            <button class="option-btn">Option 2</button>
-            <button class="option-btn">Option 3</button>
-            <button class="option-btn">Option 4</button>
-            <button class="option-btn">Option 5</button> 
-        </div>
-        <button class="submit-btn">SUBMIT</button>
-    </div>
-
-<div class="inner-box">
-    <h1>Pick your favorite books 📙</h1>
-    <div class="button-grid">
-            <button class="option-btn">Option 1</button>
-            <button class="option-btn">Option 2</button>
-            <button class="option-btn">Option 3</button>
-            <button class="option-btn">Option 4</button>
-            <button class="option-btn">Option 5</button>
-            <button class="option-btn">Option 6</button>
-            <button class="option-btn">Option 7</button>
-            <button class="option-btn">Option 8</button>
-            <button class="option-btn">Option 9</button>
-            <button class="option-btn">Option 1</button>
-            <button class="option-btn">Option 2</button>
-            <button class="option-btn">Option 1</button>
-            <button class="option-btn">Option 2</button>
-            <button class="option-btn">Option 3</button>
-            <button class="option-btn">Option 4</button>
-            <button class="option-btn">Option 5</button> 
-        </div>
-        <button class="submit-btn">SUBMIT</button>
+        {% for category in categories %}
+        <button class="option-btn" data-category="{{ category }}">{{ category }}</button>
+        {% endfor %}
     </div>
 </div>
+
+<div class="inner-box">
+    <h1>Select your price range📙</h1>
+    <div class="button-grid">
+        <button class="option-btn" data-price="free">Free</button>
+        <button class="option-btn" data-price="under5">Under $5</button>
+        <button class="option-btn" data-price="under10">Under $10</button>
+        <button class="option-btn" data-price="under15">Under $15</button>
+        <button class="option-btn" data-price="any">Any Price</button>
+    </div>
+</div>
+
+<div class="inner-box">
+    <h1>Select minimum rating📙</h1>
+    <div class="button-grid">
+        <button class="option-btn" data-rating="3">3+ Stars</button>
+        <button class="option-btn" data-rating="4">4+ Stars</button>
+        <button class="option-btn" data-rating="5">5 Stars</button>
+        <button class="option-btn" data-rating="any">Any Rating</button>
+    </div>
+</div>
+
+<div class="inner-box">
+    <h1>Recommended Books 📙</h1>
+    <div class="button-grid" id="recommended-books">
+        <!-- Recommendations will be displayed here -->
+    </div>
+    <button class="submit-btn" onclick="getRecommendations()">GET RECOMMENDATIONS</button>
+</div>
+
 <script>
+    let selectedPreferences = {
+        tags: [],
+        genres: [],
+        price: null,
+        rating: null
+    };
+
+    function updatePreferences() {
+        selectedPreferences.tags = Array.from(document.querySelectorAll('[data-type].selected'))
+            .map(btn => btn.dataset.type);
+        
+        selectedPreferences.genres = Array.from(document.querySelectorAll('[data-category].selected'))
+            .map(btn => btn.dataset.category);
+        
+        const priceBtn = document.querySelector('[data-price].selected');
+        selectedPreferences.price = priceBtn ? priceBtn.dataset.price : null;
+        
+        const ratingBtn = document.querySelector('[data-rating].selected');
+        selectedPreferences.rating = ratingBtn ? ratingBtn.dataset.rating : null;
+    }
+
+    function getRecommendations() {
+        updatePreferences();
+
+        if (selectedPreferences.tags.length === 0 && 
+            selectedPreferences.genres.length === 0 && 
+            !selectedPreferences.price && 
+            !selectedPreferences.rating) {
+            alert('Please select at least one preference from any section');
+            return;
+        }
+
+        const submitBtn = document.querySelector('.submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Loading...';
+
+        const recommendationsGrid = document.getElementById('recommended-books');
+        recommendationsGrid.innerHTML = `
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Finding the perfect books for you...</p>
+            </div>
+        `;
+
+        setTimeout(() => {
+            fetch('/books/recommendations/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify(selectedPreferences)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.error || 'Failed to get recommendations');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                recommendationsGrid.innerHTML = '';
+                
+                if (data.recommendations && data.recommendations.length > 0) {
+                    const fragment = document.createDocumentFragment();
+                    
+                    data.recommendations.forEach(book => {
+                        const bookElement = document.createElement('div');
+                        bookElement.className = 'book-card';
+                        bookElement.innerHTML = `
+                            <div class="book-image">
+                                <img src="${book.image || '/static/images/no-image.png'}" 
+                                     alt="${book.title}" 
+                                     loading="lazy"
+                                     onerror="this.src='/static/images/no-image.png'">
+                            </div>
+                            <div class="book-info">
+                                <h3>${book.title}</h3>
+                                <p class="author">by ${book.author}</p>
+                                <div class="book-details">
+                                    <span class="rating">⭐ ${book.rating}</span>
+                                    <span class="category">${book.category}</span>
+                                    ${book.is_bestseller ? '<span class="badge bestseller">Bestseller</span>' : ''}
+                                    ${book.is_editors_pick ? '<span class="badge editors-pick">Editor\'s Pick</span>' : ''}
+                                    ${book.is_goodreads_choice ? '<span class="badge goodreads">Goodreads Choice</span>' : ''}
+                                </div>
+                                ${book.product_url ? `<a href="${book.product_url}" target="_blank" class="read-more">Read More ></a>` : ''}
+                            </div>
+                        `;
+                        fragment.appendChild(bookElement);
+                    });
+                    
+                    recommendationsGrid.appendChild(fragment);
+                } else {
+                    recommendationsGrid.innerHTML = '<p class="no-results">No recommendations found. Try adjusting your preferences.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                recommendationsGrid.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'GET RECOMMENDATIONS';
+            });
+        }, 100); 
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         const sections = document.querySelectorAll(".inner-box");
-
         sections.forEach(section => {
             const buttons = section.querySelectorAll(".option-btn");
-            const maxSelection = 5;
+            const maxSelection = section.querySelector('[data-price]') || section.querySelector('[data-rating]') ? 1 : 5;
 
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
                     let selectedButtons = section.querySelectorAll(".option-btn.selected");
 
                     if (this.classList.contains("selected")) {
-                        this.classList.remove("selected"); // Deselect if already selected
+                        this.classList.remove("selected");
                     } else if (selectedButtons.length < maxSelection) {
-                        this.classList.add("selected"); // Select if under the limit
+                        this.classList.add("selected");
                     } else {
-                        alert("You can only select up to 5 options in this section.");
+                        alert(`You can only select up to ${maxSelection} options in this section.`);
                     }
                 });
             });
@@ -97,6 +200,232 @@
     });
 </script>
 
+<style>
+    .inner-box {
+        max-width: 1400px;
+        margin: 20px auto;
+        padding: 25px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .inner-box h1 {
+        margin-bottom: 20px;
+        font-size: 1.5em;
+        color: #333;
+    }
+
+    .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .option-btn {
+        padding: 12px 20px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        background: #fff;
+        color: #333;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .option-btn:hover {
+        border-color: #3498db;
+        background: #f8f9fa;
+    }
+
+    .option-btn.selected {
+        background: #3498db;
+        color: white;
+        border-color: #3498db;
+    }
+
+    .submit-btn {
+        padding: 12px 30px;
+        background: #2ecc71;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .submit-btn:hover {
+        background: #27ae60;
+    }
+
+    .book-card {
+        background: #fff;
+        border-radius: 6px;
+        padding: 12px;
+        margin: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-align: left;
+        font-size: 0.9em;
+        display: flex;
+        gap: 15px;
+    }
+
+    .book-image {
+        flex-shrink: 0;
+        width: 100px;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .book-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .book-info {
+        flex-grow: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .book-info h3 {
+        margin: 0 0 3px 0;
+        color: #333;
+        font-size: 1.1em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .author {
+        color: #666;
+        margin: 3px 0;
+        font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .book-details {
+        margin-top: auto;
+    }
+
+    .rating {
+        color: #f39c12;
+    }
+
+    .category {
+        color: #666;
+        font-size: 0.85em;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 2px 6px;
+        border-radius: 10px;
+        font-size: 0.75em;
+        font-weight: 500;
+    }
+
+    .bestseller {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .editors-pick {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .goodreads {
+        background-color: #2ecc71;
+        color: white;
+    }
+
+    .no-results {
+        text-align: center;
+        color: #666;
+        padding: 15px;
+        font-size: 0.9em;
+    }
+
+    #recommended-books {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        gap: 15px;
+        padding: 15px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .read-more {
+        display: inline-block;
+        margin-top: 10px;
+        color: #3498db;
+        text-decoration: none;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .read-more:hover {
+        color: #2980b9;
+        text-decoration: underline;
+    }
+
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+    }
+
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+    }
+
+    .loading-text {
+        color: #666;
+        font-size: 1.1em;
+        text-align: center;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .submit-btn:disabled {
+        background: #95a5a6;
+        cursor: not-allowed;
+    }
+
+    .book-card {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">

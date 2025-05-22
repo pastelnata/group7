@@ -12,11 +12,10 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from .forms import SupportForm
 from django.conf import settings
-# Create your views here.
+from django.views.decorators.csrf import csrf_exempt
 
 def libraryview(request):
     event_list=Book.objects.all()
-    # random books since loading whole database makes the system loads for at least 5 min or it is breaking 
     random_books = event_list.order_by(Random())[:3]  
     return render(request, "libraryview.html", {'event_list': random_books})  
 
@@ -27,12 +26,18 @@ def autocomplete(request):
         for product in qs:
             titles.append(product.title)
 
-        # titles = [product.title for product in qs]
         return JsonResponse(titles, safe=False)
     return render(request,"home.html")
 
 def homepage(request):
-    return render(request, "homepage.html")
+    context = {
+        'categories': Book.get_unique_categories(),
+        'popular_books': Book.get_popular_books(limit=10),
+        'best_sellers': Book.get_best_sellers()[:5],
+        'editors_picks': Book.get_editors_picks()[:5],
+        'goodreads_choices': Book.get_goodreads_choices()[:5],
+    }
+    return render(request, "homepage.html", context)
 
 def support_view(request):
     if request.method == 'POST':
@@ -62,3 +67,63 @@ def welcome(request):
 
 def about(request):
     return render(request, 'myapp/about.html')
+
+@csrf_exempt
+def get_recommendations(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            query = Book.objects.all()
+            
+            if data.get('tags'):
+                if 'bestseller' in data['tags']:
+                    query = query.filter(isBestSeller=True)
+                if 'editors-pick' in data['tags']:
+                    query = query.filter(isEditorsPick=True)
+                if 'goodreads-choice' in data['tags']:
+                    query = query.filter(isGoodReadsChoice=True)
+                if 'highly-rated' in data['tags']:
+                    query = query.filter(stars__gte=4.5)
+                if 'new-releases' in data['tags']:
+                    query = query.filter(published_date__isnull=False).order_by('-published_date')
+                if 'kindle-unlimited' in data['tags']:
+                    query = query.filter(isKindleUnlimited=True)
+            
+            if data.get('genres'):
+                query = query.filter(category_name__in=data['genres'])
+            
+            if data.get('price'):
+                if data['price'] == 'free':
+                    query = query.filter(price=0)
+                elif data['price'] == 'under5':
+                    query = query.filter(price__lt=5)
+                elif data['price'] == 'under10':
+                    query = query.filter(price__lt=10)
+                elif data['price'] == 'under15':
+                    query = query.filter(price__lt=15)
+            
+            if data.get('rating') and data['rating'] != 'any':
+                query = query.filter(stars__gte=float(data['rating']))
+            
+            results = query.order_by(Random())[:10]
+            recommendations = []
+            
+            for book in results:
+                recommendations.append({
+                    'title': book.title,
+                    'author': book.author,
+                    'rating': book.stars,
+                    'category': book.category_name,
+                    'image': book.imgURL,
+                    'product_url': book.productURL,
+                    'is_bestseller': book.isBestSeller,
+                    'is_editors_pick': book.isEditorsPick,
+                    'is_goodreads_choice': book.isGoodReadsChoice
+                })
+            
+            return JsonResponse({'recommendations': recommendations})
+            
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
