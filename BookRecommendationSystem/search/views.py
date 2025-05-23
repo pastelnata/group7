@@ -3,7 +3,7 @@ from django.shortcuts import render
 from books.models import Book
 from .search.bst_manager import search_books
 from .sorting.get_top10 import get_top10_books
-from .search.bfs import bfs  # Import your bfs function
+from recommendation.graph.bfs import bfs  # Import your bfs function
 
 def search_results(request):
     query = request.GET.get('query', '')

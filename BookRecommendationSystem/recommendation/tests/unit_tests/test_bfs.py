@@ -1,9 +1,9 @@
 from django.test import TestCase
 from unittest.mock import patch, MagicMock
-from ...search.bfs import bfs
+from recommendation.graph.bfs import bfs
 
 class BFSTests(TestCase):
-    @patch('search.search.bfs.build_graph_adj_list')
+    @patch('recommendation.graph.bfs.build_graph_adj_list')
     def test_bfs_with_valid_start_node(self, mock_build_graph_adj_list):
         # Mock graph data
         mock_adj = {1: [2, 3], 2: [1, 4], 3: [1], 4: [2]}
@@ -21,7 +21,7 @@ class BFSTests(TestCase):
         # Verify traversal order
         self.assertEqual(result, [1, 2, 3, 4])
 
-    @patch('search.search.bfs.build_graph_adj_list')
+    @patch('recommendation.graph.bfs.build_graph_adj_list')
     def test_bfs_with_invalid_start_node(self, mock_build_graph_adj_list):
         # Mock graph data
         mock_adj = {1: [2, 3], 2: [1, 4], 3: [1], 4: [2]}
@@ -37,7 +37,7 @@ class BFSTests(TestCase):
         with self.assertRaises(ValueError):
             bfs(start_node_id=99)
 
-    @patch('search.search.bfs.build_graph_adj_list')
+    @patch('recommendation.graph.bfs.build_graph_adj_list')
     def test_bfs_with_return_books(self, mock_build_graph_adj_list):
         # Mock graph data
         mock_adj = {1: [2, 3], 2: [1, 4], 3: [1], 4: [2]}

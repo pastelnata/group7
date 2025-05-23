@@ -1,7 +1,18 @@
 import networkx as nx
 from collections import defaultdict
 from books.models import Book
-from collections import deque, defaultdict
+from collections import defaultdict
+from django.core.cache import cache
+
+def get_cached_graph():
+    """Get or build the graph from cache."""
+    cache_key = 'book_recommendation_graph'
+    cached_data = cache.get(cache_key)
+    if cached_data is None:
+        adj, book_lookup = build_graph_adj_list()
+        cache.set(cache_key, (adj, book_lookup), 3600)
+        return adj, book_lookup
+    return cached_data
 
 def build_graph_adj_list():
     """
