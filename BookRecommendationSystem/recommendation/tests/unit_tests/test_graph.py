@@ -1,10 +1,10 @@
 from django.test import TestCase
 from unittest.mock import patch, MagicMock
-from ...search.bfs import bfs
-from ...search.graph import build_graph_adj_list
+from recommendation.graph.bfs import build_graph_adj_list
+
 
 class GraphTests(TestCase):
-    @patch('search.search.graph.Book.objects.all')
+    @patch('recommendation.graph.graph.Book.objects.all')
     def test_build_graph_adj_list(self, mock_books_all):
         # Mock Book objects
         mock_book1 = MagicMock(id=1, category_id=101)

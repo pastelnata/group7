@@ -2,8 +2,8 @@ from django.test import TestCase
 from books.models import Book
 from search.search.bst_manager import get_book_bst, search_books
 from search.sorting.get_top10 import get_top10_books
-from search.search.graph import build_graph_adj_list
-from search.search.bfs import bfs
+from recommendation.graph.graph import build_graph_adj_list
+from recommendation.graph.bfs import bfs
 
 class BooksComponentTests(TestCase):
     def setUp(self):

@@ -29,16 +29,6 @@ def autocomplete(request):
         return JsonResponse(titles, safe=False)
     return render(request,"home.html")
 
-def homepage(request):
-    context = {
-        'categories': Book.get_unique_categories(),
-        'popular_books': Book.get_popular_books(limit=10),
-        'best_sellers': Book.get_best_sellers()[:5],
-        'editors_picks': Book.get_editors_picks()[:5],
-        'goodreads_choices': Book.get_goodreads_choices()[:5],
-    }
-    return render(request, "homepage.html", context)
-
 def support_view(request):
     if request.method == 'POST':
         form = SupportForm(request.POST)
