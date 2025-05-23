@@ -31,6 +31,8 @@ def build_graph_adj_list():
 
     # Build book_lookup and initialize adjacency sets
     for book in books:
+        if book.category_name:
+            category_groups[book.category_name].append(book)
         if book.category_id:
             book_lookup[book.id] = book
             adj[book.id] = set()
@@ -61,3 +63,4 @@ def build_graph_adj_list():
     cache.set('book_recommendation_graph', (adj, book_lookup), 3600)
 
     return adj, book_lookup
+

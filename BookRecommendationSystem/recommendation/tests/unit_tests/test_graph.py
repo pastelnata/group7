@@ -6,10 +6,10 @@ from recommendation.graph.bfs import build_graph_adj_list
 class GraphTests(TestCase):
     @patch('recommendation.graph.graph.Book.objects.all')
     def test_build_graph_adj_list(self, mock_books_all):
-        # Mock Book objects
-        mock_book1 = MagicMock(id=1, category_id=101)
-        mock_book2 = MagicMock(id=2, category_id=101)
-        mock_book3 = MagicMock(id=3, category_id=102)
+        # Mock Book objects with category_name
+        mock_book1 = MagicMock(id=1, category_name="A")
+        mock_book2 = MagicMock(id=2, category_name="A")
+        mock_book3 = MagicMock(id=3, category_name="B")
         mock_books_all.return_value = [mock_book1, mock_book2, mock_book3]
 
         # Call the function
