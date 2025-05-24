@@ -1,6 +1,5 @@
 import time
 
-
 def safe_float_conversion(value):
     try:
         return float(value)
@@ -38,14 +37,19 @@ def calculate_relevance_score(book, search_query: str) -> float:
     return score
 
 def get_sort_key(book, sort_by):
+    def get_value(obj, key, default=0.0):
+        if isinstance(obj, dict):
+            return obj.get(key, default)
+        return getattr(obj, key, default)
+
     if sort_by == 'rating':
-        return safe_float_conversion(getattr(book, 'stars', 0.0))
+        return safe_float_conversion(get_value(book, 'stars', 0.0))
     elif sort_by == 'price_high':
-        return -safe_float_conversion(getattr(book, 'price', 0.0))
+        return safe_float_conversion(get_value(book, 'price', 0.0))
     elif sort_by == 'price_low':
-        return safe_float_conversion(getattr(book, 'price', 0.0))
+        return -safe_float_conversion(get_value(book, 'price', 0.0))
     elif sort_by == 'relevance':
-        return calculate_relevance_score(book, book.get('search_query', ''))
+        return calculate_relevance_score(book, book.get('search_query', '') if isinstance(book, dict) else getattr(book, 'search_query', ''))
 
 def merge_sort(books, sort_by='relevance'):
     if not isinstance(books, list) or len(books) <= 1:

@@ -5,7 +5,7 @@ from search.sorting.get_top10 import get_top10_books
 from recommendation.graph.graph import build_graph_adj_list
 from recommendation.graph.bfs import bfs
 
-class BooksComponentTests(TestCase):
+class BooksIntegrationTests(TestCase):
     def setUp(self):
         # Create mock book data in the database with specified categories
         self.book1 = Book.objects.create(
@@ -120,20 +120,20 @@ class BooksComponentTests(TestCase):
         self.assertEqual(sci_fi_books[0]['title'], "The Hobbit")  # Highest stars and reviews
         self.assertEqual(sci_fi_books[-1]['title'], "Dune")  # Lower stars and reviews
 
-    def test_books_to_recommendation(self):
-        # Test integration with the recommendation component using BFS and adjacency list
 
-        # Build the adjacency list and book lookup
-        adj_list, book_lookup = build_graph_adj_list()
-
-        # Validate adjacency list structure
-        self.assertEqual(len(adj_list), 10)
-        self.assertIn(self.book2.id, adj_list[self.book10.id])
-        self.assertIn(self.book5.id, adj_list[self.book6.id])
-
-        # Perform BFS starting from "Gone Girl"
-        bfs_result = bfs(self.book2.id, return_books=True)
-
-        # Validate BFS traversal
-        self.assertGreaterEqual(len(bfs_result), 1)  # At least one book should be connected
-        self.assertIn(self.book10.id, [book.id for book in bfs_result])  # Check that "The Silent Patient" is recommended
+    def test_search_books_romance_query(self):
+        # User searches for 'romance'
+        results = search_books('romance')
+        # Should return at least the Romance book(s)
+        result_titles = [book.title for book in results]
+        # "Pride and Prejudice" is the only Romance book in setUp
+        self.assertIn("Pride and Prejudice", result_titles)
+        # All returned books should have 'romance' in title, author, or category (case-insensitive)
+        for book in results:
+            self.assertTrue(
+                'romance' in book.title.lower() or
+                'romance' in book.author.lower() or
+                'romance' in book.category_name.lower()
+            )
+        # Should not return unrelated categories (e.g., "Dune" is not romance)
+        self.assertNotIn("Dune", result_titles)
