@@ -1,5 +1,3 @@
-from django.views.decorators.csrf import csrf_exempt
-from recommendation.graph.graph import get_cached_graph
 from .models import Book
 import logging
 from collections import defaultdict
@@ -72,3 +70,14 @@ def serialize_book(book):
 		'image': book.imgURL if hasattr(book, 'imgURL') else None,
 		'product_url': book.productURL if hasattr(book, 'productURL') else None
 	}
+
+def group_by_category():
+	"""
+	Groups books by their category.
+	Returns a dictionary where keys are category names and values are lists of books in that category.
+	"""
+	category_groups = defaultdict(list)
+	for book_id, category_id in Book.objects.values_list('id', 'category_id'):
+		if category_id:
+			category_groups[category_id].append(book_id)
+	return category_groups
