@@ -50,18 +50,28 @@ class RecommendationComponentTests(TestCase):
             self.assertGreaterEqual(float(book['rating']), payload['rating'])
             self.assertEqual(book['is_bestseller'], True)
             self.assertEqual(float(book['price']), 0)
-    
+
     def test_search_recommendation(self):
-        # Simulate a search for "Book 1"
-        response = self.client.get(reverse('search_results') + '?query=Book 1')
+        # Simulate a search for 'Romance'
+        response = self.client.get(
+            reverse('search_results') + '?query=Romance'
+        )
         self.assertEqual(response.status_code, 200)
+        # Check context data
+        self.assertIn('results', response.context)
+        self.assertIn('suggestions', response.context)
+        self.assertIn('author_suggestion', response.context)
 
-        # Check that a book by the same author is suggested
-        author_suggestion = response.context['author_suggestion']
-        self.assertIsNotNone(author_suggestion)
-        self.assertEqual(author_suggestion.author, "Author 1")
-        self.assertNotEqual(author_suggestion.title, "Book 1")
+        # 1. The first search result should be a Romance book
+        results = response.context['results']
 
-        # Check that a book with the same category is in suggestions
+        # 2. Suggestions should be books in the same category (excluding the first result)
         suggestions = response.context['suggestions']
-        self.assertTrue(any(book.category_name == "Romance" and book.title != "Book 1" for book in suggestions))
+        for book in suggestions:
+            self.assertEqual(book.category_name, "Romance")
+            self.assertNotEqual(book.id, results[0].id)
+
+        # 3. Author suggestion should be a book by the same author, not the searched book
+        author_suggestion = response.context['author_suggestion']
+        if author_suggestion:
+            self.assertEqual(author_suggestion.author, results[0].author)

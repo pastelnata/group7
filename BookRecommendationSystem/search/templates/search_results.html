@@ -229,8 +229,8 @@
         <select name="sort" id="sort">
             <option value="relevance" {% if sort_by == 'relevance' %}selected{% endif %}>Relevance</option>
             <option value="rating" {% if sort_by == 'rating' %}selected{% endif %}>Rating</option>
-            <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price (High to Low)</option>
-            <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price (Low to High)</option>
+            <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price (High to Low)</option>
+            <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price (Low to High)</option>
         </select>
     </form>
 </div>
