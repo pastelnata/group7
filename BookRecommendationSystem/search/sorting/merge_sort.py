@@ -1,15 +1,13 @@
-from typing import List, Dict, Any, Union
-from decimal import Decimal
+import time
 
-def safe_float_conversion(value: Any) -> float:
-    if value is None:
-        return 0.0
+
+def safe_float_conversion(value):
     try:
         return float(value)
     except (ValueError, TypeError):
         return 0.0
-
-def calculate_relevance_score(book: Dict[str, Any], search_query: str) -> float:
+    
+def calculate_relevance_score(book, search_query: str) -> float:
     if not search_query:
         return 0.0
     
@@ -39,46 +37,36 @@ def calculate_relevance_score(book: Dict[str, Any], search_query: str) -> float:
     
     return score
 
-def merge_sort(books: List[Dict[str, Any]], search_query: str, 
-               sort_by: str = 'relevance') -> List[Dict[str, Any]]:
-    
+def get_sort_key(book, sort_by):
+    if sort_by == 'rating':
+        return safe_float_conversion(getattr(book, 'stars', 0.0))
+    elif sort_by == 'price_high':
+        return -safe_float_conversion(getattr(book, 'price', 0.0))
+    elif sort_by == 'price_low':
+        return safe_float_conversion(getattr(book, 'price', 0.0))
+    elif sort_by == 'relevance':
+        return calculate_relevance_score(book, book.get('search_query', ''))
+
+def merge_sort(books, sort_by='relevance'):
     if not isinstance(books, list) or len(books) <= 1:
         return books
-        
-    mid = len(books) // 2
-    left = merge_sort(books[:mid], search_query, sort_by)
-    right = merge_sort(books[mid:], search_query, sort_by)
-    
-    return merge(left, right, sort_by, search_query)
 
-def merge(left: List[Dict[str, Any]], right: List[Dict[str, Any]], 
-         sort_by: str, search_query: str = '') -> List[Dict[str, Any]]:
+    mid = len(books) // 2
+    left = merge_sort(books[:mid], sort_by)
+    right = merge_sort(books[mid:], sort_by)
+    merge_sort_end = time.time()
+    return merge(left, right, sort_by)
+
+def merge(left, right, sort_by):
     result = []
     i = j = 0
-    
     while i < len(left) and j < len(right):
-        left_key = get_sort_key(left[i], sort_by, search_query)
-        right_key = get_sort_key(right[j], sort_by, search_query)
-        
-        if left_key >= right_key:
+        if get_sort_key(left[i], sort_by) >= get_sort_key(right[j], sort_by):
             result.append(left[i])
             i += 1
         else:
             result.append(right[j])
             j += 1
-    
     result.extend(left[i:])
     result.extend(right[j:])
     return result
-
-def get_sort_key(book: Dict[str, Any], sort_by: str, search_query: str = '') -> float:
-    
-    if sort_by == 'relevance':
-        return calculate_relevance_score(book, search_query)
-    elif sort_by == 'rating':
-        return safe_float_conversion(book.get('stars', 0.0))
-    elif sort_by == 'price_low':
-        return -safe_float_conversion(book.get('price', 0.0))  
-    elif sort_by == 'price_high':
-        return safe_float_conversion(book.get('price', 0.0))   
-    return 0.0
