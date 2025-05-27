@@ -169,3 +169,15 @@ button[type="submit"]:hover {
     text-align: center;
     margin-bottom: 5px;
 }
+
+.search-wrapper .btn-outline-primary {
+    background-color: #ffcc5c !important;
+    color: #222 !important;
+    border-color: #ffcc5c !important;
+}
+
+.search-wrapper .btn-outline-primary:hover, .search-wrapper .btn-outline-primary:focus {
+    background-color: #ffb347 !important;
+    color: #222 !important;
+    border-color: #ffb347 !important;
+}
