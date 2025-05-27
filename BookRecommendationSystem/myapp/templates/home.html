@@ -59,7 +59,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-between align-items-center">
-        <a class="navbar-brand" href="{% url 'homepage' %}">BookMatch</a>
+        <a class="navbar-brand" href="{% url 'welcome' %}">BookMatch</a>
 
         <div class="search-wrapper mx-auto">
             <form action="{% url 'search_results' %}" method="GET" class="form-inline">
@@ -79,11 +79,21 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'top10_page' %}">Top 10</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'libraryview' %}">Lucky Charm</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'support' %}">Contact</a></li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'homepage' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'homepage' %}">Home</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'top10_page' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'top10_page' %}">Top 10</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'libraryview' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'libraryview' %}">Lucky Charm</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'support' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'support' %}">Contact</a>
+                </li>
             </ul>
         </div>
     </nav>

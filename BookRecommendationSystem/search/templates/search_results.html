@@ -302,12 +302,13 @@
 {% endif %}
 
 
-
-
 {% else %}
 <p style="text-align: center;">No similar books found.</p>
 {% endif %}
 {% else %}
 <p style="text-align: center;">No results found for "{{ query }}"</p>
 {% endif %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
