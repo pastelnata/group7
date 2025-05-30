@@ -17,15 +17,6 @@
             font-family: 'Special Elite', cursive;
         }
 
-        body {
-            font-size: 17px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px;
-            background-color: #28587B;
-        }
-
         .descriptionofthepage {
             font-size: 26px;
             font-weight: bold;
@@ -39,23 +30,22 @@
             margin-top: 30px;
             flex-direction: column;
             align-items: center;
-            align-content: center;
-            align-self: center;
-            margin-left: 150px;
             gap: 25px;
-            width: 100%;
+            margin: 30px auto 0 auto;
             max-width: 700px;
+            width: 100%;
         }
 
         .block {
             background-color: #fff;
             width: 100%;
+            max-width: 700px;
             padding: 20px;
             border-radius: 12px;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
+            justify-content: center;
             gap: 15px;
-            position: relative;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
@@ -117,22 +107,6 @@
             color: #0056b3;
         }
 
-        .delete-button {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            color: #e63946;
-            transition: color 0.2s;
-        }
-
-        .delete-button:hover {
-            color: #d62828;
-        }
-
         .pagination {
             display: flex;
             justify-content: center;
@@ -160,6 +134,7 @@
 
         .texttop {
             padding-top: 20px;
+            text-align: center;
         }
     </style>
     <title>Book Recommendations</title>
@@ -169,8 +144,6 @@
 {% endblock %}
 
 {% block content %}
-
-<body>
 
     <h1 class="texttop">You may like: </h1>
     <div class="blockofblocks">
@@ -189,7 +162,6 @@
                 </div>
                 <a href="{{ event.productURL }}" target="_blank" class="read-more">Read more >></a>
             </div>
-            <button class="delete-button">🗑</button>
         </div>
         {% endfor %}
     </div>
@@ -208,7 +180,6 @@
         {% endif %}
     </div>
 
-</body>
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
