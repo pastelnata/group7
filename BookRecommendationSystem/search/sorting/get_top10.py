@@ -18,7 +18,7 @@ def get_top10_books():
         top_books[category] = [
             {
                 'title': books_dict[book_id].title,
-                'stars': stars,
+                'stars': books_dict[book_id].stars,
                 'author': books_dict[book_id].author,
                 'price': books_dict[book_id].price,
                 'imgURL': books_dict[book_id].imgURL,
