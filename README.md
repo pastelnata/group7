@@ -42,9 +42,10 @@ This project was developed during our 4th semester at university. The objective 
 
 ### Running the project:
 1. Ensure you are in the correct folder: group7/BookRecommendationSystem
-2. write in the terminal: ``` python manage.py makemigrations ```
-3. write in the terminal: ``` python manage.py migrate ```
-4. write in the terminal: ``` python manage.py runserver ```
+2. Write in the terminal: ``` python manage.py makemigrations ```
+3. Write in the terminal: ``` python manage.py migrate ```
+3. Write in the terminal: ``` python manage.py load_data ```
+4. Write in the terminal: ``` python manage.py runserver ```
 5. To access the application: go to http://127.0.0.1:8000
 
 To stop the application simply kill the terminal where the application is currently running on.
