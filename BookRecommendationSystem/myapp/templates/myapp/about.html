@@ -4,13 +4,7 @@
 {% load static %}
 <link href="https://fonts.googleapis.com/css?family=Instrument+Serif&display=swap" rel="stylesheet">
 <style>
- body {
-        background-color: #28587B;
-        color: #f8f0f0;
-        line-height: 1.6;
-        padding: 20px;
-    }
-    .team {
+.team {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
@@ -50,44 +44,16 @@
     font-weight: bold;
     font-size: 2rem;
     color: #002e5b;
-    cursor: pointer;
     transition: color 0.2s ease;
 }
 
-.dreamteam:hover {
-    color: #710404;
+#dream-team-title {
+    color: #3c2f1b;
+    cursor: default;
 }
 
-/* stuff for the edit page*/
-
-.alarm_button {
-    display: inline-block;
-    padding: 10px;
-    font-size: 17px;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    border: 1px solid #007bff;
+.member h3 {
     color: white;
-    background-color: #0E3386;
-    border-radius: 20px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 10px 0;
-}
-
-.alarm_button:hover {
-    background-color: beige;
-    color: blue;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
 }
 
 </style>

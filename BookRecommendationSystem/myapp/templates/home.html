@@ -15,13 +15,13 @@
             z-index: 1;
         }
 
-        /* Input + button consistency */
         .input-group input#product,
         .input-group .btn {
             height: 42px;
             font-size: 1rem;
             padding: 0 15px;
             border: 1px solid #ced4da;
+            box-sizing: border-box;
         }
 
         /* Rounded styling */
@@ -64,12 +64,12 @@
         <a class="navbar-brand" href="{% url 'welcome' %}">BookMatch</a>
 
         <div class="search-wrapper mx-auto">
-            <form action="{% url 'search_results' %}" method="GET" class="form-inline">
+            <form action="{% url 'search_results' %}" method="GET" autocomplete="off">
                 <div class="input-group">
                     <input type="text" id="product" name="query" class="form-control" placeholder="Search for books..."
                         value="{{ query }}">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit">🔍</button>
+                        <button class="btn btn-outline-primary" type="submit" style="height: 42px;">🔍</button>
                     </div>
                 </div>
             </form>
